@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Added viewport meta tag for mobile responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Civic Eye</title>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="ppg.png" type="image/x-icon">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="index.html">
+                <img src="ppg.png" alt="Civic Eye Logo">
+            </a>
+        </div>
+        <div class="menu" id="menu">
+        </div>
+        <div class="auth-buttons">
+            <button class="login-btn" onclick="openModal()">LOGIN</button>
+        </div>
+    </div>
+
+    <div id="particles-js"></div>
+    
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Civic Eye</h1>
+        <p>Introduction</p>
+        <p class="info">
+            CivicEye is an innovative software designed to detect and monitor traffic violations using
+            home-based CCTV cameras. It empowers users to identify common traffic rule violations, such as riding
+            without a helmet. The software integrates seamlessly with user-provided CCTV systems, processes violations
+            locally, and sends critical data and evidence to a centralized database. Users can access detailed violation
+            logs and reports via a DASHBOARD.
+        </p>
+    </div>
+
+    <!-- Additional Button Before Prepare Section -->
+    <div class="download-container">
+        <a href="https://github.com/SHADOW2669/CivicEye" class="download-button">Download CivicEye v1.0</a>
+    </div>
+
+    <!-- Prepare Section -->
+    <div class="prepare">
+        <h2>MORE INFO</h2>
+    </div>
+
+    <!-- Services Section -->
+    <div class="services">
+        <div class="service-box">
+            <h3>Objectives</h3>
+            <ul>
+                <li><strong>Traffic Violation Detection:</strong> Leverage AI-powered object detection (YOLOv3) to
+                    identify violations like "no helmet," "triple riding," and more.</li>
+                <li><strong>Automated Data Reporting:</strong> Send violation data (images, timestamps, types) from the
+                    client’s system to a centralized database.</li>
+                <li><strong>Centralized Monitoring:</strong> Allow users to view and manage detected violations via a
+                    web dashboard.</li>
+                <li><strong>Privacy and Efficiency:</strong> Enable local processing on the client’s machine, ensuring
+                    data privacy and reducing server costs.</li>
+                <li><strong>Scalability:</strong> Create a robust, user-friendly software that can be downloaded and run
+                    across different devices.</li>
+            </ul>
+        </div>
+        <div class="service-box">
+            <h3>KEY FEATURES</h3>
+            <ul>
+                <li><strong>Real-Time Violation Detection:</strong> Automatically detect and record traffic violations
+                    using the YOLOv3 object detection model.</li>
+                <li><strong>Local Processing:</strong> Run the detection software locally on the client’s machine,
+                    minimizing data transmission.</li>
+                <li><strong>Automated Reporting:</strong> Send violation evidence (photos and metadata) to a centralized
+                    database for storage and review.</li>
+                <li><strong>Web Dashboard:</strong> Provide a user-friendly website for viewing, searching, and
+                    filtering violations.</li>
+                <li><strong>Customizable Configuration:</strong> Users can easily configure the CCTV feed (RTSP URL) and
+                    software settings.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Software Requirements Section -->
+    <div class="software-requirements">
+        <h2>SYSTEM REQUIREMENTS</h2>
+        <ul>
+            <li><strong>Processor:</strong> Intel i3 or higher</li>
+            <li><strong>RAM:</strong> 4GB (8GB recommended)</li>
+            <li><strong>GPU:</strong> Optional (YOLOv3-tiny can run on CPU)</li>
+            <li><strong>Storage:</strong> 20GB free disk space</li>
+        </ul>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footerBottom">
+            <p>Copyright &copy;2025 CIVIC EYE</p>
+        </div>
+    </footer>
+
+    <!-- Login Popup Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Login</h2>
+            <input type="text" placeholder="Username" id="username">
+            <input type="password" placeholder="Password" id="password">
+            <button onclick="login()">Login</button>
+            <p>Don't have an account? <a onclick="openSignupModal()" style="color: #ff5722; text-decoration: none;">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById("loginModal").style.display = "flex";
+        }
+        function closeModal() {
+            document.getElementById("loginModal").style.display = "none";
+        }
+        function login() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === "admin" && password === "password123") {
+                alert("Login Successful!");
+                closeModal();
+            } else {
+                alert("Invalid Credentials! Try again.");
+            }
+        }
+    </script>
+
+    <!-- Dashboard Prompt Modal -->
+    <div id="dashboardPromptModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeDashboardPrompt()">&times;</span>
+            <h2>Please Login</h2>
+            <p>Please login to access the Dashboard.</p>
+            <button onclick="switchToLogin()">Login Now</button>
+        </div>
+    </div>
+
+    <script>
+        // Open dashboard prompt modal
+        function openDashboardPrompt() {
+            document.getElementById("dashboardPromptModal").style.display = "flex";
+        }
+
+        // Close dashboard prompt modal
+        function closeDashboardPrompt() {
+            document.getElementById("dashboardPromptModal").style.display = "none";
+        }
+
+        // Switch from dashboard prompt to login modal
+        function switchToLogin() {
+            closeDashboardPrompt();
+            openModal();
+        }
+
+        // Intercept Dashboard link clicks: if not logged in, open the dashboard prompt modal
+        document.getElementById("dashboardLink").addEventListener("click", function (e) {
+            if (!localStorage.getItem("loggedIn")) {
+                e.preventDefault();
+                openDashboardPrompt();
+            }
+        });
+    </script>
+
+    <!-- Signup Popup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeSignupModal()">&times;</span>
+            <h2>Signup</h2>
+            <form action="signup.php" method="POST">
+                <input type="text" name="fullname" placeholder="Full Name" required>
+                <input type="text" name="phone" placeholder="Phone Number" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="text" name="city" placeholder="City" required>
+                <input type="text" name="pincode" placeholder="Pin Code" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Signup</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Open signup modal
+        function openSignupModal() {
+          document.getElementById("signupModal").style.display = "flex";
+        }
+        // Close signup modal
+        function closeSignupModal() {
+          document.getElementById("signupModal").style.display = "none";
+        }
+    </script>
+
+    <!-- Particles.js Configuration -->
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#7BD3EA"
+                },
+                shape: {
+                    type: "circle"
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 4,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#7BD3EA",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 3,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "repulse"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    }
+                },
+                modes: {
+                    repulse: {
+                        distance: 100,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+</body>
+</html>

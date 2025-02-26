@@ -1,0 +1,479 @@
+/* General Styles */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Orbitron:wght@400;700&family=IBM+Plex+Sans:wght@400;700&display=swap');
+body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: black;
+    color: white;
+}
+
+/* Transparent Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.3); /* Semi-transparent black */
+    backdrop-filter: blur(10px); /* Adds a blur effect */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(131, 0, 254, 0.4);
+}
+
+.navbar-left {
+    display: flex;
+    flex-direction: column; /* Stack logo and text vertically */
+    align-items: center;
+}
+
+.navbar-left img {
+    width: 100px;  /* Increased size */
+    height: 100px;
+    margin-bottom: 5px; /* Add space between logo and text */
+}
+
+/* Add a slight hover effect for interactivity */
+.navbar-left img:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+
+.brand-name {
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Navbar Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Roboto Mono', monospace;
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+}
+
+/* Neon Glow Effect */
+.nav-links a:hover {
+    color: #ff5722;
+    text-shadow: 0 0 10px #ff5722, 0 0 20px #ff5722;
+}
+
+/* Login Button with Glow */
+.login-btn {
+    padding: 10px 15px;
+    background-color: transparent;
+    color: white;
+    border: 2px solid #8300fe;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.login-btn:hover {
+    background-color: #8300fe;
+    box-shadow: 0 0 10px #8300fe, 0 0 20px #8300fe;
+}
+
+/* Transparent Menu Toggle for Mobile */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Navbar Scroll Effect */
+.navbar.scrolled {
+    background: rgba(0, 0, 0, 0.8); /* Darker on scroll */
+    transition: background 0.3s ease-in-out;
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        width: 100%;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: #0a0a0a;
+}
+
+/* Hero Section - Adjusted for Better Positioning */
+.hero {
+    text-align: center;
+    padding: 180px 20px 100px; /* Increased top padding to move text down */
+}
+
+.hero h1 {
+    font-size: 72px;
+    margin: 20px 0 10px; /* Adds spacing */
+    font-family: 'Orbitron', sans-serif;
+}
+
+.hero p {
+    font-size: 24px;
+    margin: 20px 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+
+.hero .info {
+    margin-top: 40px;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    font-family: 'Roboto Mono', monospace;
+}
+
+/* Tracks Section Styles */
+.track.orange {
+    background-color: #ff5722;
+    color: white;
+}
+
+.track.purple {
+    background-color: #9c27b0;
+    color: white;
+}
+
+/* Download button */
+
+.download-button {
+            display: block;
+            width: 280px;
+            margin: 30px auto;
+            padding: 15px 0;
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            background-color: transparent;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(131, 0, 254, 0.5);
+        }
+        .download-button:hover {
+            background-color: #6b00d8;
+            box-shadow: 0 6px 15px rgba(131, 0, 254, 0.7);
+        }
+        
+
+
+/* Prepare Section Styles */
+.prepare {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.prepare h2 {
+    font-size: 32px;
+    color: #9c27b0;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Services Section Styles */
+.services {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 50px;
+    flex-wrap: wrap;
+}
+
+.service-box {
+    width: 45%;
+    padding: 30px;
+    border: 2px solid white;
+    border-radius: 10px;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.service-box h3 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    font-family: 'Orbitron', sans-serif;
+    color: #ff5722;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.service-box ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.service-box ul li {
+    font-size: 18px;
+    color: white;
+    margin-bottom: 20px;
+    padding: 15px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+    border-left: 4px solid #ff5722;
+    padding-left: 15px;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 5px;
+}
+
+.service-box ul li strong {
+    color: #ff5722;
+}
+
+/* Software Requirements Section Styles */
+.software-requirements {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    margin: 50px auto;
+    width: 60%;
+    border: 2px solid #ff5722;
+    border-radius: 10px;
+    text-align: left;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.software-requirements h2 {
+    font-size: 28px;
+    color: #ff5722;
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.software-requirements ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.software-requirements ul li {
+    font-size: 18px;
+    padding: 10px;
+    border-left: 4px solid #ff5722;
+    background-color: rgba(255, 255, 255, 0.07);
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding-left: 15px;
+    line-height: 1.6;
+}
+
+/* Footer Styles */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+footer {
+    background-color: #111;
+}
+
+.socialIcons a:hover {
+    background-color: #111;
+    transition: 0.5s;
+}
+
+.socialIcons a:hover i {
+    color: white;
+    transition: 0.5s;
+}
+
+.footerNav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+
+.footerNav ul li a {
+    color: white;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.3em;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footerNav ul li a:hover {
+    opacity: 1;
+}
+
+.footerBottom {
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+}
+
+.footerBottom p {
+    color: white;
+}
+
+.designer {
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    margin: 0px 5px;
+}
+
+/* Modal Styles (used by both login & dashboard prompt modals) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background-color: #222;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #444;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 5px;
+  position: relative;
+  text-align: center;
+}
+.modal-content h2 {
+  margin-top: 0;
+  color: #ff5722;
+  font-family: 'Orbitron', sans-serif;
+}
+.modal-content p {
+  font-size: 16px;
+  margin: 20px 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.modal-content input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.modal-content button {
+  padding: 10px 20px;
+  background-color: #8300fe;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+}
+.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+    /* Navbar: stack items vertically */
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar a {
+        margin: 10px 0;
+    }
+    /* Services: change layout to single column */
+    .services {
+        flex-direction: column;
+        align-items: center;
+    }
+    .service-box {
+        width: 90%;
+    }
+    /* Software Requirements: adjust width */
+    .software-requirements {
+        width: 90%;
+    }
+}
+
+@media (max-width: 600px) {
+    /* Adjust hero section text sizes for small screens */
+    .hero h1 {
+        font-size: 48px;
+    }
+    .hero p {
+        font-size: 18px;
+    }
+    /* Adjust navbar image size */
+    .navbar-left img {
+        width: 50px;
+        height: 40px;
+    }
+}
