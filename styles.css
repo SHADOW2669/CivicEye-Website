@@ -15,7 +15,7 @@ body {
     padding: 10px 40px;
     background: rgba(0, 0, 0, 0.3); /* Semi-transparent black */
     backdrop-filter: blur(10px); /* Adds a blur effect */
-    position: fixed;
+    position: flex;
     width: 100%;
     top: 0;
     left: 0;
