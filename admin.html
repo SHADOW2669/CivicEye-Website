@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Civic Eye | Admin Review</title>
+    <link rel="shortcut icon" href="IMAGES/ppg.png" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.396.0/dist/umd/lucide.min.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <link rel="stylesheet" href="admin.css" />
+
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"> <img src="IMAGES/logo1.png"
+                onerror="this.onerror=null; this.src='https://placehold.co/150x40/0a0a0a/ffffff?text=Civic+Eye';"
+                alt="Civic Eye Logo">
+        </a>
+        <div class="navbar-links"></div> <button class="hamburger-menu" aria-label="Open navigation menu"
+            aria-expanded="false" aria-controls="mobileNavMenu">
+            <svg viewBox="0 0 100 80" width="28" height="28">
+                <rect width="100" height="12" rx="6" fill="white"></rect>
+                <rect y="34" width="100" height="12" rx="6" fill="white"></rect>
+                <rect y="68" width="100" height="12" rx="6" fill="white"></rect>
+            </svg>
+        </button>
+    </nav>
+
+    <div class="mobile-nav-menu" id="mobileNavMenu" aria-hidden="true">
+        <button class="close-menu-btn" aria-label="Close navigation menu">
+            <i data-lucide="x"></i>
+        </button>
+        <a href="index.html">Home</a>
+        <a href="#">Admin Review</a>
+        <a href="#">Contact Messages</a>
+        <a href="#" class="logout-btn-link">
+            <button class="logout-btn">LOGOUT</button>
+        </a>
+    </div>
+
+    <div id="particles-js"></div>
+
+    <main>
+        <div class="admin-container">
+            <header class="admin-header" data-aos="fade-down">
+                <h1>Violation Review Panel</h1>
+                <p>Review pending violations and approve or reject them.</p>
+            </header>
+
+            <div class="session-error-message" id="sessionErrorMessage" data-aos="fade-down" data-aos-delay="50">
+            </div>
+
+            <section class="stats-section" data-aos="fade-up">
+                <div class="stats-numbers">
+                    <div class="stat-item total" data-stat="total">
+                        <span class="stat-value" id="statTotal">0</span>
+                        <span class="stat-label">Total Detections</span>
+                    </div>
+                    <div class="stat-item pending" data-stat="pending">
+                        <span class="stat-value" id="statPending">0</span>
+                        <span class="stat-label">Pending Review</span>
+                    </div>
+                    <div class="stat-item approved" data-stat="approved">
+                        <span class="stat-value" id="statApproved">0</span>
+                        <span class="stat-label">Approved Violations</span>
+                    </div>
+                    <div class="stat-item rejected" data-stat="rejected">
+                        <span class="stat-value" id="statRejected">0</span>
+                        <span class="stat-label">Rejected / False</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="filter-section" data-aos="fade-up" data-aos-delay="100">
+                <h3>Filter Violations</h3>
+                <div class="filter-buttons">
+                    <button data-filter="all" class="active">Show All</button>
+                    <button data-filter="pending">Pending</button>
+                    <button data-filter="approved">Approved</button>
+                    <button data-filter="rejected">Rejected</button>
+                </div>
+            </section>
+
+            <div class="violations-grid" id="violationsGrid" data-aos="fade-up" data-aos-delay="200">
+            </div>
+            <p id="noDetectionsMessage"
+                style="grid-column: 1 / -1; text-align: center; color: #aaa; display: none; margin-top: 1rem;">No
+                detections found in the system.</p>
+
+
+            <div id="loadMoreContainer" data-aos="fade-up" style="display: none;">
+                <button id="loadMoreBtn" class="btn-base">
+                    <i data-lucide="rotate-cw"></i>
+                    <span>Load More</span>
+                </button>
+                <p id="loadingIndicator" style="display: none;">Loading...</p>
+                <p id="loadError" style="display: none;">Could not load more items.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-logo"><img src="IMAGES/logo1.png" alt="Civic Eye Logo"
+                        onerror="this.onerror=null; this.src='https://placehold.co/150x35/030305/ffffff?text=Civic+Eye';" />
+                </div>
+                <div class="footer-description">Civic Eye: AI-powered traffic violation monitoring using existing CCTV,
+                    prioritizing local processing and privacy.</div>
+                <div class="footer-social">
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook Profile"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919A11.97 11.97 0 0 1 7.151 2.23 11.9 11.9 0 0 1 12 2.163zm0 1.802c-3.115 0-3.486.01-4.706.066-2.666.122-3.989 1.45-4.11 4.11-.057 1.22-.066 1.59-.066 4.697s.01 3.476.066 4.696c.12 2.662 1.443 3.99 4.11 4.11 1.22.056 1.59.066 4.705.066 3.117 0 3.487-.01 4.706-.066 2.664-.12 3.99-1.448 4.11-4.11.056-1.22.066-1.59.066-4.696 0-3.108-.01-3.477-.066-4.697-.12-2.66-1.446-3.988-4.11-4.11A12.015 12.015 0 0 0 16.706 4.03 11.89 11.89 0 0 0 12 3.965zm0 2.972a5.063 5.063 0 1 0 0 10.125 5.063 5.063 0 0 0 0-10.125zm0 1.802a3.26 3.26 0 1 1 0 6.52 3.26 3.26 0 0 1 0-6.52zm4.938-3.71a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z" />
+                        </svg></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-3.18v8.37h3.18v-4.75a1.92 1.92 0 0 1 1.92-1.92c.99 0 1.92.77 1.92 1.92v4.75h3.18zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68zm1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                        </svg></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="YouTube Profile"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 5.83c-.25 1.84-.9 3.08-1.81 3.79c-.97.73-2.36 1.09-4.1 1.09c-1.96 0-3.8-.21-5.4-.61c-1.6-.4-2.94-.93-3.98-1.54c-.98-.58-1.7-1.34-2.14-2.23C2.2 16.74 2 15.24 2 13.3V11c0-1.94.16-3.44.43-4.67c.27-1.23.78-2.2 1.52-2.87c.74-.67 1.7-1.14 2.82-1.4c1.13-.27 2.5-.4 4.06-.4h.1c.6 0 1.17.02 1.7.05c.53.03 1.03.08 1.49.14c.9.12 1.63.36 2.17.73c.54.36.95.84 1.2 1.41c.25.57.4 1.26.46 2.06Z" />
+                        </svg></a>
+                </div>
+            </div>
+            <div class="footer-links-section">
+                <div class="footer-links-column">
+                    <h3>Quick Links</h3>
+                    <nav><a href="index.html">Home</a><a href="#">Download</a><a href="#">Team</a><a href="#">Contact
+                            Us</a>
+                    </nav>
+                </div>
+                <div class="footer-links-column">
+                    <h3>Resources</h3>
+                    <nav><a href="index.html#features">Features</a><a href="#">Requirements</a><a
+                            href="#">Documentation</a></nav>
+                </div>
+                <div class="footer-links-column">
+                    <h3>Contact Info</h3>
+                    <p>Mangaluru, Karnataka 575001, India.</p>
+                    <p>+91 XXXXX-XXXXX</p>
+                    <p>civiceye@shadow269.in</p>
+                </div>
+                <div class="footer-links-column">
+                    <h3>Legal</h3>
+                    <nav><a href="#">Privacy Policy</a><a href="#">Terms & Conditions</a></nav>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>&copy; <span id="currentYear"></span> Civic Eye. All rights reserved.</div>
+                <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="imageModal" class="modal">
+        <span class="close-modal" aria-label="Close image preview">&times;</span>
+        <img class="modal-content" id="modalImage" alt="Zoomed Violation Image">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof particlesJS !== 'undefined') { particlesJS("particles-js", { "particles": { "number": { "value": 60, "density": { "enable": true, "value_area": 800 } }, "color": { "value": ["#8300fe", "#a855f7", "#38bdf8", "#555"] }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 0.8, "opacity_min": 0.1, "sync": false } }, "size": { "value": 2.8, "random": true, "anim": { "enable": false } }, "line_linked": { "enable": true, "distance": 140, "color": "#444", "opacity": 0.35, "width": 1 }, "move": { "enable": true, "speed": 1.6, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": true, "rotateX": 700, "rotateY": 1300 } } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 150, "line_linked": { "opacity": 0.6 } }, "push": { "particles_nb": 3 } } }, "retina_detect": true }); }
+            if (typeof AOS !== 'undefined') { AOS.init({ duration: 900, once: false, offset: 80, easing: 'ease-out-quart' }); }
+            if (typeof lucide !== 'undefined') { try { lucide.createIcons(); } catch (e) { console.error("Lucide icons init failed:", e); } }
+
+            const hamburgerBtn = document.querySelector('.hamburger-menu');
+            const mobileNav = document.querySelector('.mobile-nav-menu');
+            const closeNavBtn = document.querySelector('.close-menu-btn');
+            const body = document.body;
+            const toggleNav = (event) => { if (event) event.stopPropagation(); if (mobileNav && body && hamburgerBtn) { const isActive = mobileNav.classList.toggle('active'); body.classList.toggle('modal-open', isActive || (document.getElementById('imageModal')?.style.display === 'block')); hamburgerBtn.setAttribute('aria-expanded', isActive); mobileNav.setAttribute('aria-hidden', !isActive); } };
+            const closeNav = () => { if (mobileNav && mobileNav.classList.contains('active') && body && hamburgerBtn) { mobileNav.classList.remove('active'); if (document.getElementById('imageModal')?.style.display !== 'block') { body.classList.remove('modal-open'); } hamburgerBtn.setAttribute('aria-expanded', 'false'); mobileNav.setAttribute('aria-hidden', 'true'); } };
+            if (hamburgerBtn && mobileNav && closeNavBtn) { hamburgerBtn.addEventListener('click', toggleNav); closeNavBtn.addEventListener('click', closeNav); mobileNav.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => setTimeout(closeNav, 150)); }); document.addEventListener('click', (event) => { if (mobileNav.classList.contains('active') && !mobileNav.contains(event.target) && !hamburgerBtn.contains(event.target)) { closeNav(); } }); mobileNav.addEventListener('click', (event) => { event.stopPropagation(); }); document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && mobileNav.classList.contains('active')) { closeNav(); } }); }
+
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            const closeModalBtn = document.querySelector(".close-modal");
+            const violationsGrid = document.getElementById('violationsGrid');
+            const openImageModal = (imgElement) => { if (modal && modalImg && imgElement) { modal.style.display = "block"; modalImg.src = imgElement.src; modalImg.alt = imgElement.alt; body.classList.add('modal-open'); } };
+            const closeImageModal = () => { if (modal) { modal.style.display = "none"; if (!mobileNav || !mobileNav.classList.contains('active')) { body.classList.remove('modal-open'); } } };
+            if (violationsGrid) { violationsGrid.addEventListener('click', (event) => { if (event.target.tagName === 'IMG' && event.target.classList.contains('violation-image')) { openImageModal(event.target); } }); }
+            if (closeModalBtn) { closeModalBtn.addEventListener('click', closeImageModal); }
+            if (modal) { modal.addEventListener('click', (event) => { if (event.target === modal) { closeImageModal(); } }); }
+            document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal && modal.style.display === "block") { closeImageModal(); } });
+
+            const filterButtonsContainer = document.querySelector('.filter-buttons');
+            let currentFilter = 'all';
+            const applyFilter = () => {
+                if (!violationsGrid) return;
+                const allCards = violationsGrid.querySelectorAll('.violation-card');
+                let hasVisibleItems = false;
+                allCards.forEach(card => {
+                    const cardStatus = card.dataset.status;
+                    const shouldShow = (currentFilter === 'all' || cardStatus === currentFilter);
+                    card.classList.toggle('hidden', !shouldShow);
+                    if (shouldShow) hasVisibleItems = true;
+                });
+                const noMatchMessage = document.getElementById('noMatchMessageForFilter');
+                if (!hasVisibleItems && allCards.length > 0 && currentFilter !== 'all') {
+                    if (!noMatchMessage) {
+                        const p = document.createElement('p');
+                        p.id = 'noMatchMessageForFilter';
+                        p.textContent = `No violations found matching the "${currentFilter}" filter.`;
+                        p.style.gridColumn = '1 / -1';
+                        p.style.textAlign = 'center';
+                        p.style.color = '#aaa';
+                        p.style.marginTop = '1rem';
+                        violationsGrid.appendChild(p);
+                    } else {
+                        noMatchMessage.style.display = 'block';
+                        noMatchMessage.textContent = `No violations found matching the "${currentFilter}" filter.`;
+                    }
+                } else if (noMatchMessage) {
+                    noMatchMessage.style.display = 'none';
+                }
+                if (typeof AOS !== 'undefined') { AOS.refresh(); }
+            };
+            const handleFilterClick = (event) => {
+                const filterButton = event.target.closest('button[data-filter]');
+                if (!filterButton) return;
+                currentFilter = filterButton.dataset.filter;
+                if (filterButtonsContainer) {
+                    filterButtonsContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                    filterButton.classList.add('active');
+                }
+                applyFilter();
+            };
+            if (filterButtonsContainer) { filterButtonsContainer.addEventListener('click', handleFilterClick); }
+
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const loadError = document.getElementById('loadError');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            const noDetectionsMessage = document.getElementById('noDetectionsMessage');
+
+            const ITEMS_PER_LOAD_INITIAL = 6;
+            const ITEMS_PER_LOAD_MORE = 4;
+            let currentOffset = 0;
+
+            const allDetectionsData = [
+                { id: '101', name: 'Rider Alpha', timestamp: '2024-05-01T10:30:00Z', status: 'pending', image_url: 'https://placehold.co/400x220/5e278e/ffffff?text=Violation+101' },
+                { id: '102', name: 'Biker Beta', timestamp: '2024-05-02T11:15:00Z', status: 'approved', image_url: 'https://placehold.co/400x220/278e5e/ffffff?text=Violation+102' },
+                { id: '103', name: 'Scooter Gamma', timestamp: '2024-05-03T14:00:00Z', status: 'rejected', image_url: 'https://placehold.co/400x220/8e2727/ffffff?text=Violation+103' },
+                { id: '104', name: 'Cyclist Delta', timestamp: '2024-05-04T09:00:00Z', status: 'pending', image_url: 'https://placehold.co/400x220/5e278e/ffffff?text=Violation+104' },
+                { id: '105', name: 'Driver Epsilon', timestamp: '2024-05-05T16:45:00Z', status: 'approved', image_url: 'https://placehold.co/400x220/278e5e/ffffff?text=Violation+105' },
+                { id: '106', name: 'Rider Zeta', timestamp: '2024-05-06T12:30:00Z', status: 'pending', image_url: 'https://placehold.co/400x220/5e278e/ffffff?text=Violation+106' },
+                { id: '107', name: 'Biker Eta', timestamp: '2024-05-07T08:20:00Z', status: 'rejected', image_url: 'https://placehold.co/400x220/8e2727/ffffff?text=Violation+107' },
+                { id: '108', name: 'Scooter Theta', timestamp: '2024-05-08T17:50:00Z', status: 'pending', image_url: 'https://placehold.co/400x220/5e278e/ffffff?text=Violation+108' },
+                { id: '109', name: 'Cyclist Iota', timestamp: '2024-05-09T13:10:00Z', status: 'approved', image_url: 'https://placehold.co/400x220/278e5e/ffffff?text=Violation+109' },
+                { id: '110', name: 'Driver Kappa', timestamp: '2024-05-10T11:00:00Z', status: 'pending', image_url: 'https://placehold.co/400x220/5e278e/ffffff?text=Violation+110' },
+                { id: '111', name: 'Rider Lambda', timestamp: '2024-05-11T10:35:00Z', status: 'pending', image_url: 'https://placehold.co/400x220/5e278e/ffffff?text=Violation+111' },
+                { id: '112', name: 'Biker Mu', timestamp: '2024-05-12T11:20:00Z', status: 'approved', image_url: 'https://placehold.co/400x220/278e5e/ffffff?text=Violation+112' }
+            ];
+
+            const escapeHtml = (unsafe) => {
+                if (typeof unsafe !== 'string') return String(unsafe);
+                return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            }
+
+            const createAdminViolationCard = (detection) => {
+                const detectionId = escapeHtml(detection.id || 'N/A');
+                const timestamp = detection.timestamp ? new Date(detection.timestamp) : new Date();
+                const date = timestamp.toLocaleDateString('en-CA');
+                const time = timestamp.toLocaleTimeString('en-GB');
+                let status = (detection.status || 'pending').toLowerCase();
+                let statusText = status.charAt(0).toUpperCase() + status.slice(1);
+                let isPending = (status === 'pending');
+                const userName = escapeHtml(detection.name || 'Unknown User');
+                const violationType = 'No Helmet';
+                const imageSrc = detection.image_url || `https://placehold.co/400x220/333333/cccccc?text=No+Image+ID+${detectionId}`;
+                const imageAlt = `Detection ID: ${detectionId} by ${userName}`;
+                const imageErrorScript = `this.onerror=null; this.src='https://placehold.co/400x220/333333/cccccc?text=Error'; this.alt='Image load error';`;
+                const isHidden = (currentFilter !== 'all' && status !== currentFilter);
+
+                return `
+                    <div class="violation-card ${isHidden ? 'hidden' : ''}" data-status="${escapeHtml(status)}" data-id="${detectionId}" data-aos="fade-up">
+                        <img class="violation-image" src="${imageSrc}" alt="${escapeHtml(imageAlt)}" onerror="${imageErrorScript}">
+                        <div class="violation-details">
+                            <h4>Violation: ${escapeHtml(violationType)}</h4>
+                            <p><strong>User:</strong> ${userName}</p>
+                            <p><strong>Date:</strong> ${escapeHtml(date)}</p>
+                            <p><strong>Time:</strong> ${escapeHtml(time)}</p>
+                            <p><strong>Status:</strong> <span class="violation-status status-${escapeHtml(status)}">${escapeHtml(statusText)}</span></p>
+                        </div>
+                        <div class="violation-actions">
+                            <a href="#" data-action="approve" data-id="${detectionId}" class="btn-base btn-approve ${!isPending ? 'disabled' : ''}" aria-label="Approve detection ${detectionId}">
+                                <i data-lucide="check-circle"></i> Approve
+                            </a>
+                            <a href="#" data-action="reject" data-id="${detectionId}" class="btn-base btn-reject ${!isPending ? 'disabled' : ''}" aria-label="Reject detection ${detectionId}">
+                                <i data-lucide="x-circle"></i> Reject
+                            </a>
+                        </div>
+                    </div>
+                `;
+            };
+
+            const updateStats = () => {
+                let total = allDetectionsData.length;
+                let pending = 0;
+                let approved = 0;
+                let rejected = 0;
+                allDetectionsData.forEach(d => {
+                    if (d.status === 'pending') pending++;
+                    else if (d.status === 'approved') approved++;
+                    else if (d.status === 'rejected') rejected++;
+                });
+                document.getElementById('statTotal').textContent = total;
+                document.getElementById('statPending').textContent = pending;
+                document.getElementById('statApproved').textContent = approved;
+                document.getElementById('statRejected').textContent = rejected;
+            };
+
+
+            const renderDetections = (detectionsToRender) => {
+                if (!violationsGrid) return;
+                const fragment = document.createDocumentFragment();
+                detectionsToRender.forEach(detection => {
+                    const cardHtml = createAdminViolationCard(detection);
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = cardHtml.trim();
+                    if (tempDiv.firstChild) {
+                        fragment.appendChild(tempDiv.firstChild);
+                    }
+                });
+                violationsGrid.appendChild(fragment);
+                if (typeof lucide !== 'undefined') { lucide.createIcons(); }
+                if (typeof AOS !== 'undefined') { AOS.refreshHard(); }
+            };
+
+            const loadInitialDetections = () => {
+                if (allDetectionsData.length === 0) {
+                    if (noDetectionsMessage) noDetectionsMessage.style.display = 'block';
+                    if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                    return;
+                }
+                if (noDetectionsMessage) noDetectionsMessage.style.display = 'none';
+
+                const initialBatch = allDetectionsData.slice(0, ITEMS_PER_LOAD_INITIAL);
+                renderDetections(initialBatch);
+                currentOffset = initialBatch.length;
+
+                if (allDetectionsData.length > ITEMS_PER_LOAD_INITIAL) {
+                    if (loadMoreContainer) loadMoreContainer.style.display = 'block';
+                    if (loadMoreBtn) loadMoreBtn.style.display = 'inline-flex';
+                } else {
+                    if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                }
+                applyFilter();
+            };
+
+
+            if (loadMoreBtn && violationsGrid && loadingIndicator && loadError && loadMoreContainer) {
+                loadMoreBtn.addEventListener('click', () => {
+                    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                    if (loadError) loadError.style.display = 'none';
+                    if (loadingIndicator) loadingIndicator.style.display = 'block';
+
+                    setTimeout(() => { // Simulate network delay
+                        try {
+                            const nextBatch = allDetectionsData.slice(currentOffset, currentOffset + ITEMS_PER_LOAD_MORE);
+                            if (nextBatch.length > 0) {
+                                renderDetections(nextBatch);
+                                currentOffset += nextBatch.length;
+                            }
+
+                            if (currentOffset >= allDetectionsData.length) {
+                                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                            } else {
+                                if (loadMoreBtn) loadMoreBtn.style.display = 'inline-flex';
+                            }
+                        } catch (error) {
+                            console.error('Error loading more detections:', error);
+                            if (loadError) {
+                                loadError.textContent = `Error: ${error.message || 'Could not load items.'}`;
+                                loadError.style.display = 'block';
+                            }
+                            if (loadMoreBtn) loadMoreBtn.style.display = 'inline-flex';
+                        } finally {
+                            if (loadingIndicator) loadingIndicator.style.display = 'none';
+                        }
+                    }, 500);
+                });
+            }
+
+            if (violationsGrid) {
+                violationsGrid.addEventListener('click', (event) => {
+                    const link = event.target.closest('.violation-actions a');
+                    if (link && link.classList.contains('disabled')) {
+                        event.preventDefault();
+                        return;
+                    }
+                    if (link && (link.dataset.action === 'approve' || link.dataset.action === 'reject')) {
+                        event.preventDefault();
+                        const cardId = link.dataset.id;
+                        const action = link.dataset.action;
+                        const detectionIndex = allDetectionsData.findIndex(d => d.id === cardId);
+
+                        if (detectionIndex > -1) {
+                            allDetectionsData[detectionIndex].status = action; // 'approve' becomes 'approved' in data
+                            if (action === 'approve') allDetectionsData[detectionIndex].status = 'approved';
+
+
+                            const cardElement = link.closest('.violation-card');
+                            if (cardElement) {
+                                cardElement.dataset.status = allDetectionsData[detectionIndex].status;
+                                const statusSpan = cardElement.querySelector('.violation-status');
+                                if (statusSpan) {
+                                    statusSpan.className = `violation-status status-${allDetectionsData[detectionIndex].status}`;
+                                    statusSpan.textContent = allDetectionsData[detectionIndex].status.charAt(0).toUpperCase() + allDetectionsData[detectionIndex].status.slice(1);
+                                }
+                                cardElement.querySelectorAll('.violation-actions a').forEach(btn => btn.classList.add('disabled'));
+                            }
+                            updateStats();
+                            applyFilter(); // Re-apply filter in case the item should now be hidden/shown
+                        }
+                    }
+                });
+            }
+
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            updateStats();
+            loadInitialDetections();
+
+        });
+    </script>
+</body>
+
+</html>

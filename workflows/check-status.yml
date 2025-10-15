@@ -1,0 +1,48 @@
+name: Check civiceye.shadow269.in Status
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Runs the workflow on a schedule (e.g., every hour)
+  schedule:
+    - cron: '0 * * * *' # This cron expression means "at minute 0 of every hour"
+
+jobs:
+  # This workflow contains a single job called "check_site"
+  check_site:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Step to check the website status
+      - name: Ping civiceye.shadow269.in
+        run: |
+          # Send a HEAD request (faster as it doesn't download the body)
+          # -s: silent mode
+          # -o /dev/null: discard body output
+          # -w "%{http_code}": output only the HTTP status code
+          # --max-time 10: set a timeout of 10 seconds for the request
+          # --fail: make curl return an error code if the HTTP status is 4xx or 5xx
+          response_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://civiceye.shadow269.in)
+
+          echo "HTTP Status Code: $response_code"
+
+          # Check if the response code indicates success (2xx or 3xx range)
+          if [ "$response_code" -ge 200 ] && [ "$response_code" -lt 400 ]; then
+            echo "civiceye.shadow269.in is online and responding successfully."
+            exit 0 # Exit with success
+          else
+            echo "civiceye.shadow269.in is offline or returned an error status code: $response_code."
+            exit 1 # Exit with failure
+          fi
+      # Optional: Add another step here if you want to use a dedicated GitHub Action from the Marketplace
+      # For example, using 'jtalk/url-health-check-action@v4':
+      # - name: HTTP Check civiceye.shadow269.in
+      #   uses: jtalk/url-health-check-action@v4
+      #   with:
+      #     url: https://civiceye.shadow269.in
+      #     max-attempts: 3 # Optional: Number of attempts
+      #     retry-delay: 5s # Optional: Delay between retries
