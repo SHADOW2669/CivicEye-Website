@@ -1,29 +1,49 @@
-# Civic Eye Website - Server Edition
+# Civic Eye Website Demo
 
 The **Civic Eye Website** is the official frontend for **Civic Eye**, an AI-powered helmet violation detection system. This server-side edition offers authentication, app downloads, team bios, contact features, and detection result storage — all connected to a backend powered by PHP and MySQL.
 
-[![CivicEye Website Status](https://github.com/SHADOW2669/CivicEye_Website/actions/workflows/check-status.yml/badge.svg)](https://civiceye.shadow269.in)
+[![CivicEye Website Status](https://github.com/SHADOW2669/CivicEye-Website/actions/workflows/check-status.yml/badge.svg)](https://civiceye.shadow269.in)
 
-## Table of Contents
-
-1. [Introduction](#introduction)
-2. [Features](#features)
-3. [Technologies Used](#technologies-used)
-4. [Installation](#installation)
-5. [Configuration](#configuration)
-6. [Database Setup](#database-setup)
-7. [How Login System Works](#how-login-system-works)
-8. [Insert Admin to Database](#insert-admin-to-database)
-9. [API Endpoints](#api-endpoints)
-10. [User Dashboard](#user-dashboard)
-11. [Admin Panel](#admin-panel)
-12. [Usage](#usage)
-13. [Session Handling](#session-handling)
-14. [Contributing](#contributing)
-15. [License](#license)
-16. [Notes](#notes)
-
-## Introduction
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <p align="center">
+        <a href="https://github.com/SHADOW2669/CivicEye">
+          <img src="https://github.com/SHADOW2669/CivicEye/blob/main/DATA/icon.png?raw=true" width="70" alt="CivicEye Core Icon"/>
+        </a>
+      </p>
+      <h3 align="left">CivicEye (Core Application)</h3>
+      <p align="left">Real-time helmet detection using <strong>YOLOv8</strong> and a custom <strong>GUI</strong>.</p>
+      <ul>
+        <li>🎯 <strong>YOLOv8</strong>-based detection</li>
+        <li>🖥️ <strong>GUI</strong> with image storage & preview</li>
+        <li>📦 Offline-capable for resource-constrained systems</li>
+      </ul>
+      <p align="left">
+        <strong>🔗 <a href="https://github.com/SHADOW2669/CivicEye">View on GitHub</a></strong>
+        </p>
+    </td>
+    <td width="50%" valign="top">
+      <p align="center">
+        <a href="https://github.com/SHADOW2669/CivicEye-Website-Server">
+          <img src="https://shadow2669.github.io/CivicEye_Website/IMAGES/logo1.png" width="180" alt="CivicEye Server Edition Logo"/>
+        </a>
+      </p>
+      <h3 align="left">CivicEye Website/Server</h3>
+      <p align="left">Robust PHP & MySQL backend for the CivicEye ecosystem.</p>
+      <ul>
+        <li>🔐 Secure user authentication</li>
+        <li>📊 Admin panel for data management</li>
+        <li>📝 Detailed violation logging for centralized incident tracking</li>
+      </ul>
+       <p align="left">
+        <strong>🔗 <a href="https://civiceye-demo.shadow269.in/">View the static Website</a></strong>
+      <p align="left">
+        <strong>🔗 <a href="https://github.com/SHADOW2669/CivicEye-Website-Server">View on GitHub</a></strong>
+      </p>
+    </td>
+  </tr>
+</table>
 
 The **Civic Eye Web Interface** acts as the central hub to manage authentication, display detection results, and interact with users via contact forms. Detection happens locally; this server interface focuses purely on session management, UI rendering, and MySQL data handling.
 
@@ -53,194 +73,6 @@ The **Civic Eye Web Interface** acts as the central hub to manage authentication
 | Styling      | `login.css`, `style.css`     |
 | JS Libraries | AOS, Particles.js, Lucide    |
 
-## Installation
-
-### Prerequisites
-
-- PHP 7.4+ server (XAMPP, MAMP, WAMP)
-- MySQL Server
-- Git (optional for clone)
-
-### Steps
-
-```bash
-git clone https://github.com/SHADOW2669/CivicEye-Website-Server.git
-mv CivicEye-Website-Server /path/to/htdocs/
-```
-
-Then open:
-```
-http://localhost/CivicEye-Website-Server/index.php
-```
-
-## Configuration
-
-### `config.php`
-
-```php
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "civiceye";
-```
-
-Update based on your DB server credentials.
-
-## Database Setup
-
-### 1. Create the database
-
-```sql
-CREATE DATABASE civiceye;
-```
-
-### 2. Create tables
-
-#### `users`
-```sql
-CREATE TABLE users (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100),
-  email VARCHAR(100) UNIQUE,
-  password VARCHAR(255),
-  role VARCHAR(50) DEFAULT 'user'
-);
-```
-
-#### `contacts`
-```sql
-CREATE TABLE contacts (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100),
-  email VARCHAR(100),
-  message TEXT,
-  submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-#### `detections`
-```sql
-CREATE TABLE detections (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  user_id INT UNSIGNED NOT NULL,
-  timestamp DATETIME NOT NULL,
-  frame_number INT NOT NULL,
-  helmet_status VARCHAR(20) NOT NULL,
-  status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
-  image LONGBLOB,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
-```
-
-## How Login System Works
-
-The login system is built using PHP sessions. When a user logs in via `login.php`:
-
-1. PHP checks the email and password against the `users` table.
-2. If valid, a `$_SESSION` is created storing `user_id` and `role`.
-3. The session persists across pages until logout or browser close.
-
-### User vs Admin Access
-
-- **User**: Can view personal detections via `user_page.php`.
-- **Admin**: Can view all detections, approve/reject entries, and see all contact messages.
-
-## Insert Admin to Database
-
-To insert an admin manually:
-
-1. Generate a hashed password using PHP:
-
-```php
-<?php echo password_hash("yourpassword", PASSWORD_DEFAULT); ?>
-```
-
-2. Insert the user:
-
-```sql
-INSERT INTO users (name, email, password, role)
-VALUES ('Admin', 'admin@example.com', 'HASHED_PASSWORD_HERE', 'admin');
-```
-
-## API Endpoints
-
-### 1. `api/login.php` — User Login
-
-**Method**: `POST`  
-**Content-Type**: `application/json`
-
-**Request Body**:
-```json
-{
-  "email": "user@example.com",
-  "password": "password123"
-}
-```
-
-**Response**:
-```json
-{
-  "status": "success",
-  "user": {
-    "id": 1,
-    "name": "User",
-    "role": "user"
-  }
-}
-```
-
----
-
-### 2. `api/upload.php` — Upload Detection
-
-**Method**: `POST`  
-**Form Data**:
-- `timestamp`
-- `frame`
-- `helmet`
-- `user_id`
-- `image` (binary file)
-
-**Response**:
-```json
-{ "status": "success" }
-```
-
-## User Dashboard
-
-After login, users are redirected to `user_page.php` which displays:
-
-- Personal information (name, email)
-- Uploaded detection records (filtered by their `user_id`)
-- Logout option
-
-All views are session-restricted using `$_SESSION['role'] === 'user'`
-
-## Admin Panel
-
-Admins logging in via `login.php` and accessing `user_page.php` see:
-
-- All detection entries from all users
-- Approve / Reject buttons for each detection
-- Contact form message log
-- Enhanced view based on `$_SESSION['role'] === 'admin'`
-
-## Usage
-
-Navigate through:
-
-- `index.php` → Homepage
-- `download.php` → GitHub & OS setup
-- `team.php` → Team members
-- `contact-us.php` → Form → stored in MySQL
-- `login.php` → Login/Register form
-- `user_page.php` → User/Admin dashboard
-
-## Session Handling
-
-- Login creates `$_SESSION['user_id']` and `$_SESSION['role']`
-- Session is destroyed on logout or browser close
-- Access to user/admin views is protected by session roles
 
 ## Contributing
 
@@ -257,9 +89,3 @@ If you have suggestions, bug fixes, design improvements, or feature additions, f
 
 Licensed under the **MIT License**.  
 See the [LICENSE](https://github.com/SHADOW2669/CivicEye-Website-Server/blob/main/LICENSE).
-
-## Notes
-
-- Always run PHP files from a server (`http://localhost/...`) not from `file://`
-- Ensure MySQL is running before launching the site
-- Run the Python detection  [`civiceye.py`](https://github.com/SHADOW2669/CivicEye/blob/main/civiceye.py) locally on your system.
